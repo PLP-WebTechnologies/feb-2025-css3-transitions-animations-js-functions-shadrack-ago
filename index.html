@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS3 Transitions & LocalStorage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #animatedBox {
+      width: 150px;
+      height: 150px;
+      background-color: lightcoral;
+      margin: 20px auto;
+      transition: transform 0.5s ease, background-color 0.5s ease;
+    }
+
+    #animatedBox.animate {
+      transform: scale(1.2) rotate(15deg);
+      background-color: teal;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: royalblue;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: darkblue;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome!</h1>
+  <div id="animatedBox"></div>
+
+  <button onclick="triggerAnimation()">Click Me ✨</button>
+  <br><br>
+  <label>
+    Preferred Theme Color: 
+    <input type="color" id="colorPicker">
+  </label>
+
+  <script>
+    const box = document.getElementById('animatedBox');
+    const colorPicker = document.getElementById('colorPicker');
+
+    // Load user preference
+    window.onload = function () {
+      const savedColor = localStorage.getItem("themeColor");
+      if (savedColor) {
+        document.body.style.backgroundColor = savedColor;
+        colorPicker.value = savedColor;
+      }
+    };
+
+    // Store theme preference
+    colorPicker.oninput = function () {
+      const chosenColor = colorPicker.value;
+      document.body.style.backgroundColor = chosenColor;
+      localStorage.setItem("themeColor", chosenColor);
+    };
+
+    // Animate box on button click
+    function triggerAnimation() {
+      box.classList.add("animate");
+      setTimeout(() => box.classList.remove("animate"), 800);
+    }
+  </script>
+
+</body>
+</html>
